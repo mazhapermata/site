@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MAZHA PERMATA</title>
+
+<!-- ✅ KEEP EMPTY (favicon/logo tab icon) -->
+<link rel="icon" type="image/png" sizes="32x32" href="MAZHAPERMATALOGO.png">
+
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:#fff;overflow-x:hidden;padding-top:65px;color:#111;}
+  section{scroll-margin-top:92px;}
+
+  /* ===== Helpers ===== */
+  .container{
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    position:fixed;top:0;left:0;width:100%;
+    background:#fff;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 18px;
+    box-shadow:0 2px 15px rgba(0,0,0,.18);
+    z-index:1000;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;}
+  .logo{
+    width:44px;height:44px;object-fit:cover;border-radius:12px;
+    box-shadow:0 10px 22px rgba(0,0,0,.12);
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.1;}
+  .brand-title{font-size:16px;font-weight:900;letter-spacing:.8px;color:#0a7a5c;text-transform:uppercase;}
+  .brand-subtitle{font-size:12px;font-weight:700;color:#666;margin-top:3px;}
+
+  /* Desktop nav */
+  nav{display:flex;align-items:center;gap:6px;}
+  nav a{
+    padding:10px 10px;font-weight:800;color:#111;text-decoration:none;
+    border-radius:12px;transition:.2s;white-space:nowrap;
+  }
+  nav a:hover{background:#f2fbf7;color:#0a7a5c;}
+  nav button{
+    margin-left:6px;padding:10px 14px;background:#0a7a5c;color:#fff;
+    border:none;border-radius:12px;cursor:pointer;font-weight:900;transition:.2s;
+  }
+  nav button:hover{background:#062e20;transform:translateY(-1px);}
+
+  /* Hamburger */
+  .menu-btn{
+    display:none;width:44px;height:44px;border-radius:12px;
+    border:1px solid rgba(0,0,0,.12);background:#fff;cursor:pointer;
+    align-items:center;justify-content:center;
+  }
+  .menu-btn span{width:20px;height:2px;background:#0a7a5c;display:block;position:relative;}
+  .menu-btn span::before,.menu-btn span::after{
+    content:"";position:absolute;left:0;width:20px;height:2px;background:#0a7a5c;
+  }
+  .menu-btn span::before{top:-6px;}
+  .menu-btn span::after{top:6px;}
+
+  /* =====================================================
+     ✅ HERO (GRASSLAND + BLUR + SLOW MOVE)
+  ===================================================== */
+
+  /* ===== HERO (FIX iPad GAP + background fallback) ===== */
+.hero{
+  --hero-bg: url("GRASSLAND.jpg");
+  position: relative;
+  overflow: hidden;
+
+  /* ✅ fallback background (so even if ::before fails, image still shows) */
+  background: var(--hero-bg) center bottom / cover no-repeat;
+
+  /* ✅ iPad/phone safe height */
+  min-height: calc(100svh - 65px);   /* header = 65px */
+  padding: 36px 0 56px;
+
+  /* ✅ center the content so no empty gap */
+  display: flex;
+  align-items: center;
+}
+
+/* blurred moving layer */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: var(--hero-bg) center bottom / cover no-repeat;
+  filter: blur(3px);
+  transform: scale(1.08);
+  z-index:0;
+  animation: bgMove 80s linear infinite;
+}
+
+/* overlay for readability */
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(255,255,255,.30);
+  z-index:1;
+}
+
+@keyframes bgMove{
+  0%   { background-position: 0% bottom; }
+  100% { background-position: 100% bottom; }
+}
+
+/* keep hero content above blur */
+.hero .container,
+.hero-inner,
+.hero-text,
+.hero-image,
+.hero-buttons,
+.stats{
+  position: relative;
+  z-index: 2;
+}
+
+/* ✅ iPad specific: reduce extra padding if still tall */
+@media (min-width: 768px) and (max-width: 1024px){
+  .hero{ padding: 24px 0 32px; }
+}
+  .hero-inner{
+    display:grid;grid-template-columns: 1.05fr 0.95fr;
+    gap:24px;align-items:center;
+  }
+  .hero-text h1{
+    font-size:clamp(28px,4vw,48px);
+    margin-bottom:14px;color:#142916;line-height:1.1;
+  }
+  .hero-text p{
+    font-size:clamp(13px,1.2vw,15px);
+    font-weight:750;color:#0f361d;margin-bottom:18px;line-height:1.65;
+    text-align:justify;max-width:70ch;padding-right: 30px;
+  }
+
+  .hero-buttons{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 16px;}
+  .hero-buttons button{
+    padding:14px 18px;border-radius:16px;border:none;font-weight:900;
+    cursor:pointer;transition:.2s;
+  }
+  .btn-primary{background:linear-gradient(45deg,#0a7a5c,#1a8601);color:#fff;}
+  .btn-outline{background:linear-gradient(45deg,#0a7a5c,#1a8601);color:#fff;}
+  .hero-buttons button:hover{transform:translateY(-2px);}
+
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;}
+  .stat{
+    background:rgba(255,255,255,.75);
+    border:1px solid rgba(10,122,92,.25);
+    padding:12px 14px;border-radius:16px;font-size:16px;font-weight:900;
+    color:#124538;min-width:160px;
+  }
+
+  .hero-image{
+    width:100%;border-radius:22px;overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,0.12);
+    background:#fff;aspect-ratio:16/10;position:relative;
+    animation:imageFloat 5s ease-in-out infinite;z-index:3;
+  }
+  .hero-image img{width:100%;height:100%;object-fit:cover;display:block;}
+  @keyframes imageFloat{0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}}
+
+  
+  /* ===== ABOUT ===== */
+ .about{
+  position: relative;
+  padding: 70px 0 60px;
+  overflow: hidden;
+
+  background: url("BG IMAGE PAGE2.jpg") center center / cover no-repeat;
+ 
+ 
+}
+
+/* soft overlay so text is readable */
+.about::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(255, 255, 255, 0); /* 👈 adjust 0.7–0.85 if needed */
+  z-index:0;
+}
+
+/* keep content above overlay */
+.about .container,
+.about-grid,
+.about-photo,
+.about-text,
+.features{
+  position: relative;
+  z-index:1;
+}
+
+  .about-grid{
+    display:grid;
+    grid-template-columns:.9fr 1.1fr;
+    gap:15px;
+    align-items:start;
+  }
+  .about-photo{
+    width:100%;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 14px 30px rgba(0,0,0,.10);
+    aspect-ratio:3/4;
+    background:#fff;
+  }
+  .about-photo img{width:100%;height:100%;object-fit:cover;}
+  .about-text h2{
+    font-size:clamp(22px,2.6vw,32px);
+    margin-bottom:14px;
+    color:#000000;
+  }
+  .about-text p{color:#080b07;margin-bottom:6px;line-height:1.6;font-weight:750;text-align: justify;}
+
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px;}
+  .feature-box{
+    border:1px solid rgba(10, 122, 77, 0.943);
+    padding:14px;border-radius:16px;background:#f9fffb;transition:.25s;
+  }
+  .feature-box p{
+    text-align: left;
+    text-justify: auto;
+    word-spacing: normal;
+    letter-spacing: normal;
+  }
+  .feature-box h4{color:#0a7a5c;margin-bottom:6px;}
+  .feature-box:hover{transform:translateY(-4px);box-shadow:0 12px 22px rgba(11, 168, 29, 0.326);background:#fff;}
+
+  /* ===== PROGRAMS ===== */
+#programs{
+  position: relative;
+  padding: 70px 0 60px;
+  overflow: hidden;
+
+  background: url("BG IMAGE PAGE3.jpg") center center / cover no-repeat;
+}
+
+ #programs::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(255, 255, 255, 0); /* 👈 safe for text */
+  z-index:0;
+}
+#programs .container,
+.programs-header,
+.program-grid,
+.program-card{
+  position: relative;
+  z-index:1;
+}
+  .programs-header{text-align:center;margin-bottom:28px;}
+  .programs-header h2{font-size:clamp(28px,3.4vw,54px);margin-bottom:8px;color:#102117;}
+  .programs-header p{
+    color:#111;line-height:1.6;font-weight:800;
+    font-size:clamp(14px,1.3vw,18px);max-width:70ch;margin:0 auto;
+  }
+
+  .program-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;}
+  .program-card{
+    position:relative;border:1px solid rgba(20,117,0,0.20);
+    border-radius:18px;padding:18px;background:rgba(255,255,255,.88);
+    box-shadow:0 12px 24px rgba(0,0,0,.06);
+    transition:.25s;overflow:hidden;
+  }
+  .program-card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,.12);border-color:rgba(10,122,92,.55);}
+  .icon{
+    width:52px;height:52px;border-radius:16px;background:#d9fbe8;
+    display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:24px;
+  }
+  .icon img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+  }
+  .badge{
+    display:inline-block;font-size:12px;font-weight:900;padding:6px 10px;border-radius:999px;
+    background:#0a7a5c;color:#fff;margin-bottom:10px;
+  }
+  .age{
+    background:#d9fbe8;color:#0f7a4a;
+    font-size:13px;padding:6px 12px;border-radius:999px;
+    display:inline-block;margin:10px 0 12px;font-weight:900;
+  }
+  .program-card h3{color:#0a4d3b;margin-bottom:6px;}
+  .program-card p{color:#2c3d35;line-height:1.6;font-weight:800;}
+  .program-card ul{padding-left:18px;margin-top:12px;}
+  .program-card li{margin-bottom:8px;color:#44544c;font-weight:800;}
+
+  /* ===== GALLERY ===== */
+  
+  #gallery{
+    
+  position: relative;
+  padding: 70px 0 60px;
+  overflow: hidden;
+
+  background: url("BG IMAGE PAGE4.jpg") center center / cover no-repeat;
+
+  
+  }
+  #gallery h2{text-align:center;color:#014421;font-size:clamp(24px,3vw,36px);margin-bottom:10px;}
+  #gallery .subtitle{text-align:center;max-width:650px;margin:0 auto 40px;color:#014421;font-weight:800;line-height:1.6;}
+  #gallery .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  #gallery img{
+    width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;
+    transition:.25s;display:block;background:#f1f1f1;
+  }
+  #gallery img:hover{transform:scale(1.03);}
+
+  /* ===== FAQ ===== */
+  #FAQ{
+     position: relative;
+  padding: 70px 0 60px;
+  overflow: hidden;
+
+  background: url("BG IMAGE PAGE5.jpg") center center / cover no-repeat;
+  }
+  details{margin-bottom:12px;}
+  summary{
+    padding:16px;background:#ecfbf5;border-radius:14px;cursor:pointer;font-weight:900;
+  }
+  summary:hover{color:#0f9d6a;}
+  details p{padding:14px 16px;color:#020101;font-weight:800;line-height:1.6;}
+
+  /* ===== CONTACT ===== */
+  .contact-section{padding:80px 0;background:linear-gradient(135deg,#f3fbf8,#ecfdf5);}
+  .section-title{text-align:center;margin-bottom:26px;}
+  .section-title h1{font-size:clamp(22px,3vw,36px);}
+  .section-title p{max-width:700px;margin:10px auto 0;color:#556;font-weight:800;line-height:1.6;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  .contact-info,.contact-form{
+    background:#fff;padding:18px;border-radius:18px;
+    box-shadow:0 12px 24px rgba(0,0,0,.06);
+    border:1px solid rgba(0,0,0,.06);
+  }
+  .info-item{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+  .info-icon{
+    width:40px;height:40px;border-radius:50%;
+    background:#e9f7f1;color:#0f9d6a;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;flex:0 0 40px;
+  }
+
+  .contact-form h3{margin-bottom:12px;color:#0a7a5c;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .form-row.two-col{grid-template-columns: 1fr;}
+  input,select,textarea{
+    width:100%;padding:12px 14px;border-radius:12px;border:1px solid #177c35;
+    outline:none;margin-bottom:12px;font-weight:800;
+  }
+  textarea{resize:vertical;}
+  .contact-form button{
+    width:100%;padding:14px;border:none;border-radius:999px;
+    background:#0f9d6a;color:#fff;font-size:15px;font-weight:900;
+    cursor:pointer;transition:.2s;
+  }
+  .contact-form button:hover{background:#0a7a5c;transform:translateY(-1px);}
+
+  /* ===== FLOATING SOCIAL ICON STACK ===== */
+  .social-float{
+    position:fixed;right:18px;bottom:18px;
+    display:flex;flex-direction:column;gap:12px;z-index:999;
+  }
+  .social-float a{
+    width:44px;height:44px;border-radius:50%;
+    background:#0a7a5c;display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(0,0,0,.08);
+    box-shadow:0 8px 16px rgba(0,0,0,.12);
+    transition:.2s;
+  }
+  .social-float svg{width:20px;height:20px;fill:#fff;}
+  .social-float a:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 22px rgba(0,0,0,.18);}
+
+  /* =====================================================
+     ✅ RESPONSIVE
+  ===================================================== */
+  @media (max-width:1100px){
+    .menu-btn{display:flex;}
+    nav{
+      position:absolute;top:78px;left:12px;right:12px;
+      background:#fff;border-radius:18px;padding:10px;
+      box-shadow:0 18px 40px rgba(0,0,0,.14);
+      display:none;flex-direction:column;align-items:stretch;gap:6px;
+    }
+    nav.open{display:flex;}
+    nav button{width:100%;margin-left:0;}
+
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-buttons button{width:100%;}
+    .about-grid{grid-template-columns:1fr;}
+    .features{grid-template-columns:1fr;}
+
+    .program-grid{grid-template-columns:1fr;}
+    #gallery .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .contact-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+  }
+
+  /* 📱 Show Tadika • Taska • KAFA on phone */
+  @media (max-width:1100px){
+    .brand-subtitle{
+      display:block !important;
+      font-size:11px;
+      margin-top:2px;
+      line-height:1.1;
+      white-space:nowrap;
+    }
+  }
+
+  /* 📱 GALLERY — MAKE IMAGES BIG AGAIN */
+  @media (max-width: 768px){
+    #gallery .gallery-grid{
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    #gallery img{
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+  }
+
+  /* 📱 HERO STATS — MOBILE ONLY */
+  @media (max-width: 768px){
+    .stats{justify-content: space-between;gap:8px;}
+    .stat{
+      min-width: 0;
+      flex: 1;
+      padding: 10px 8px;
+      font-size: 14px;
+      border-radius: 14px;
+      text-align: center;
+    }
+    .stat span{font-size: 12px;}
+  }
+
+  /* 📱 ABOUT — MOBILE FIX */
+  @media (max-width: 768px){
+    .about{padding-top: 40px;padding-bottom: 30px;}
+    .about-grid{gap: 20px;}
+    .about-text h2{margin-bottom: 12px;}
+    .features{gap: 12px;}
+    .feature-box{padding: 14px;}
+  }
+
+  
+/* 📱 HERO text — MOBILE FIX */
+@media (max-width: 768px){
+  .hero-text{
+    text-align: center;   /* center title */
+  }
+
+  .hero-text h1{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-text p{
+    padding-right: 0 !important;
+    text-align: justify !important;   /* ✅ JUSTIFY paragraph */
+    text-justify: inter-word;
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+  /* 📱 ABOUT IMAGE — MOBILE ONLY */
+  @media (max-width: 768px){
+    .about-photo{
+      max-width: 85%;
+      margin: 0 auto;
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* 💻 ABOUT — DESKTOP layout */
+  @media (min-width: 1101px){
+    .about-grid{align-items: center;gap: 28px;}
+    .about-photo{
+      max-width: 520px;
+      margin: 0 auto;
+      aspect-ratio: 4 / 3;
+    }
+    .features{grid-template-columns: repeat(2, 1fr);gap: 16px;}
+  }
+
+  @media (max-width: 768px){
+    #contact .social-float{ display:none !important; }
+  }
+
+
+
+  /* ✅ FAQ scroll animation */
+  #FAQ .faq-card{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  #FAQ.in-view .faq-card{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #FAQ details{
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  #FAQ.in-view details{
+    opacity: 1;
+    transform: translateX(0);
+  }
+  #FAQ.in-view details:nth-of-type(1){ transition-delay: .05s; }
+  #FAQ.in-view details:nth-of-type(2){ transition-delay: .12s; }
+  #FAQ.in-view details:nth-of-type(3){ transition-delay: .19s; }
+  #FAQ.in-view details:nth-of-type(4){ transition-delay: .26s; }
+  #FAQ.in-view details:nth-of-type(5){ transition-delay: .33s; }
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="#home" class="brand">
+    <img src="MAZHAPERMATALOGO.jpg" alt="Mazha Permata Logo" class="logo">
+    <div class="brand-text">
+      <div class="brand-title">MAZHA PERMATA</div>
+      <div class="brand-subtitle">Taska • Tadika • KAFA</div>
+    </div>
+  </a>
+
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+  </button>
+
+  <nav id="mainNav">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#programs">School</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#FAQ">FAQ</a>
+    <a href="#contact">Contact</a>
+    <button onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'});">Enroll Now</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Selamat datang ke MAZHA PERMATA</h1>
+        <p>
+          Menyemai minda kecil, menerbangkan impian sejak usia awal. Kami menyediakan pendidikan awal kanak-kanak yang holistik melalui pendekatan pembelajaran sambil bermain, bagi membantu setiap anak berkembang dari segi intelek, emosi, sosial dan kreativiti dalam persekitaran yang selamat, menyeronokkan dan penuh kasih sayang.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="btn-primary" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'});">Tempah Temujanji</button>
+          <button class="btn-outline" onclick="document.querySelector('#programs').scrollIntoView({behavior:'smooth'});">Sekolah Kami</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat">5+<br><span style="font-weight:800;color:#2a4b3e;">Tahun Pengalaman</span></div>
+          <div class="stat">200+<br><span style="font-weight:800;color:#2a4b3e;">Pelajar-pelajar</span></div>
+          <div class="stat">30+<br><span style="font-weight:800;color:#2a4b3e;">Guru-guru</span></div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="GROUP PICTURES .jpg" alt="Preschool Classroom">
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo">
+        <img src="GROUP PICTURES 1.jpg" alt="Kids Playing">
+      </div>
+
+      <div class="about-text">
+        <h2>Mengenai MAZHA PERMATA</h2>
+        <p>Di Mazha, kami mempunyai 3 sekolah iaitu Taska Little Husna Childcare Centre, Tadika Al Manuwwareen, dan Sekolah Agama Al Manuwwareen. Di mana, mereka boleh meneroka, belajar dan berkembang.</p>
+
+        <div class="features">
+          <div class="feature-box">
+            <h4>Kelas Berskala Kecil</h4>
+            <p>Perhatian maksimum untuk setiap anak.</p>
+          </div>
+          <div class="feature-box">
+            <h4>Guru Prihatin</h4>
+            <p>Pendidik berpengalaman dan berdedikasi.</p>
+          </div>
+          <div class="feature-box">
+            <h4>Persekitaran Selamat</h4>
+            <p>Premis selamat dengan kemudahan moden.</p>
+          </div>
+          <div class="feature-box">
+            <h4>Pembangunan Holistik</h4>
+            <p>Fokus pada akademik, seni, dan kemahiran hidup.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programs">
+  <div class="container">
+    <div class="programs-header">
+      <h2>Sekolah Kami</h2>
+      <p>Kurikulum yang sesuai dengan umur anak anda untuk memupuk perjalanan pembelajaran unik setiap kanak-kanak</p>
+    </div>
+
+    <div class="program-grid">
+      <div class="program-card">
+        <div class="icon">
+          <img src="LITTLE HUSNA CHILDCARE CENTRE.png" alt="Mazha Permata">
+        </div>
+        <span class="badge">Asuhan Penuh Kasih & Perhatian</span>
+        <h3>Taska Little Husna Childcare Centre</h3>
+        <span class="age">3 bulan - 3 tahun</span>
+        <p>Pengenalan lembut kepada pembelajaran melalui permainan deria, muzik, dan aktiviti kreatif.</p>
+        <ul>
+          <li>Melukis dan Mewarna</li>
+          <li>Aktiviti Sensori</li>
+          <li>Aktiviti Seni</li>
+          <li>Senamrobik</li>
+        </ul>
+      </div>
+
+      <div class="program-card">
+        <div class="icon">
+          <img src="TERANG HATI.png" alt="Mazha Permata">
+        </div>
+        <span class="badge">Membina Asas Pembelajaran Awal</span>
+        <h3>Tadika Al Munawwwareen</h3>
+        <span class="age">4 tahun - 6 tahun</span>
+        <p>Program prasekolah komprehensif yang menyediakan kanak-kanak untuk ke sekolah rendah melalui asas akademik dan penggayaan kreatif.</p>
+        <ul>
+          <li>Buku Aktiviti</li>
+          <li>Permainan DIY</li>
+          <li>Aktiviti Fizikal</li>
+          <li>Kraftangan</li>
+        </ul>
+      </div>
+
+      <div class="program-card">
+        <div class="icon">📘</div>
+        <span class="badge">Asas Ilmu & Akhlak dan Moral</span>
+        <h3>Sekolah Rendah Islam Al Munawwareen</h3>
+        <span class="age">7 tahun - 12 tahun</span>
+        <p>Program pendidikan Islam yang memupuk perkembangan rohani, nilai murni dan kefahaman agama.</p>
+        <ul>
+          <li>Pegangan Asas</li>
+          <li>Nilai Murni</li>
+          <li>Ibadah</li>
+          <li>Pembelajaran Kreatif</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <h2>Galeri Kami</h2>
+    <p class="subtitle">Suasana pembelajaran yang ceria dan momen-momen gembira anak-anak.</p>
+
+    <div class="gallery-grid">
+      <img src="PRAY TIME .jpg" alt="Classroom activity">
+      <img src="LOOP HOOPS .jpg" alt="Creative play">
+      <img src="GIRLS.jpg" alt="Physical">
+      <img src="STACKING BALLS.jpg" alt="Quiz">
+      <img src="TAEKWANDO.jpg" alt="Art class">
+      <img src="GROUP PICTURES .jpg" alt="Alphabet learning">
+      <img src="GROUP PICTURES 3.jpg" alt="Reading activity">
+      <img src="STACKING CUPS.jpg" alt="Prayer">
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="FAQ">
+  <div class="container">
+    <h2 style="text-align:center;font-size:clamp(22px,3vw,36px);margin-bottom:10px;">Soalan Lazim (FAQ)</h2>
+    <p style="text-align:center;max-width:650px;margin:0 auto 24px;color:#000000;font-weight:800;line-height:1.6;">
+      Soalan Lazim: Ketahui tentang operasi kami.
+    </p>
+
+    <div style="max-width:850px;margin:0 auto;">
+      <details><summary>Apakah waktu operasi anda?</summary><p> Kami beroperasi Isnin hingga Jumaat, dari 7:00 pagi hingga 6:00 petang.</p></details>
+      <details><summary>Apakah nisbah pelajar-guru?</summary><p>Kami mengekalkan kelas berskala kecil dengan nisbah pelajar-guru rendah untuk memastikan setiap anak mendapat perhatian individu.</p></details>
+      <details><summary>Adakah anda menyediakan makanan dan snek?</summary><p>Kami menyediakan makanan untuk pakej fullday sahaja, Pakej halfday tidak diberi. Sila menghubungi kami untuk mengetahui lebih lanjut.</p></details>
+      <details><summary>Apakah pendekatan kurikulum anda?</summary><p>Kurikulum kami menekankan pembelajaran berasaskan bermain, digabungkan dengan pendedahan awal kepada literasi, numerasi, dan STEM.</p></details>
+      <details><summary style="color:#0f9d6a;">Bagaimana saya ingin mendaftar anak saya?</summary><p>Anda boleh mendaftar dengan mengisi borang pertanyaan di bawah atau menghubungi pasukan pentadbiran kami secara terus. Kami sarankan untuk menghubungi kami secara terus untuk memudahkan lagi proses.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-title">
+      <h1>Hubungi Kami</h1>
+      <p>Bersedia untuk memberikan permulaan terbaik kepada anak anda? Jadualkan temu janji atau hantarkan pertanyaan anda kepada kami.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="info-item"><div class="info-icon">📞</div><div>+60-19260 4624</div></div>
+        <div class="info-item"><div class="info-icon">✉️</div><div>mazhapermata@gmail.com</div></div>
+        <div class="info-item"><div class="info-icon">📍</div><div>No. 20,41,43-1 & 45-1, jalan 2A/27A, Wangsa Maju Seksyen 1 , 53300, Setapak ,Kuala Lumpur</div></div>
+        <div class="info-item"><div class="info-icon">⏰</div><div>Isnin – Jumaat : 7:00 AM – 6:00 PM</div></div>
+      </div>
+
+      <form class="contact-form" id="emailForm">
+        <h3>Pertanyaan Pendaftaran</h3>
+
+        <input id="guardian" type="text" placeholder="Nama Penjaga*" required>
+
+        <div class="form-row two-col">
+          <input id="phone" type="text" placeholder="Phone*" required>
+        </div>
+
+        <div class="form-row">
+          <input id="child" type="text" placeholder="Nama Anak*" required>
+          <input id="age" type="number" placeholder="Umur Anak*" required>
+        </div>
+
+        <select id="program" required>
+          <option value="" disabled selected>Pilih Sekolah</option>
+          <option>Taska Little Husna Childcare Centre</option>
+          <option>Tadika Al Manuwwareen</option>
+          <option>Sekolah Agama Islam Al Manuwwareen</option>
+        </select>
+
+        <textarea id="message" rows="4" placeholder="Beritahu kami tentang pertanyaan anda..." required></textarea>
+
+        <button type="submit">Hantar Pertanyaan✈️</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING SOCIAL ICONS -->
+<div class="social-float">
+  <a href="https://www.facebook.com/TerangHatiWangsaMaju" target="_blank" aria-label="Facebook">
+    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H8.1V12h2.3V9.8c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.4.7-1.4 1.4V12h2.4l-.4 2.9h-2v7A10 10 0 0 0 22 12z"/></svg>
+  </a>
+
+  <a href="https://www.instagram.com/tadika_integrasi_terang_hati/" target="_blank" aria-label="Instagram">
+    <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm6.5-.5a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1z"/></svg>
+  </a>
+
+  <a href="https://wa.me/60192604624" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.6 4.2 1.7 6L0 24l6.3-1.6a11.9 11.9 0 0 0 5.8 1.5h.1c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.3-6.2-3.6-8.5Z"/></svg>
+  </a>
+
+  <a href="https://www.tiktok.com/@teranghatiwangsamaju?lang=en" target="_blank" aria-label="TikTok">
+    <svg viewBox="0 0 24 24"><path d="M14 3c.6 2.6 2.2 4.6 4.8 5.3V11c-1.9-.1-3.5-.8-4.8-1.9v6.2c0 3.2-2.6 5.7-5.8 5.7S2.5 18.5 2.5 15.3c0-3.2 2.6-5.7 5.8-5.7.4 0 .8 0 1.2.1v3c-.4-.1-.8-.2-1.2-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.7-1.2 2.7-2.7V3H14z"/></svg>
+  </a>
+</div>
+
+<script>
+  /* ✅ Mobile menu */
+  const menuBtn = document.getElementById("menuBtn");
+  const nav = document.getElementById("mainNav");
+
+  function closeMenu(){
+    nav.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded","false");
+  }
+
+  menuBtn.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", String(open));
+  });
+
+  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+  document.addEventListener("click", (e) => {
+    if(!nav.contains(e.target) && !menuBtn.contains(e.target)) closeMenu();
+  });
+
+  /* ✅ FAQ reveal on scroll */
+  const faqSection = document.querySelector("#FAQ");
+  const faqObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        faqSection.classList.add("in-view");
+        faqObs.unobserve(faqSection);
+      }
+    });
+  }, { threshold: 0.2 });
+  faqObs.observe(faqSection);
+
+  /* ✅ WhatsApp form submit */
+document.getElementById("emailForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const toEmail = "tadikateranghati@mazhapermata.com.my";
+  const subject = "Pertanyaan Pendaftaran - MAZHA PERMATA";
+
+  const body =
+`Nama Penjaga: ${document.getElementById("guardian").value}
+No Telefon: ${document.getElementById("phone").value}
+
+Nama Anak: ${document.getElementById("child").value}
+Umur Anak: ${document.getElementById("age").value}
+Program: ${document.getElementById("program").value}
+
+Mesej:
+${document.getElementById("message").value}`;
+
+  const mailtoLink =
+    `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  window.location.href = mailtoLink;
+});
+</script>
+
+</body>
+</html>
